@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==">
+<meta name="description" content="工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱=不同于==">
 <meta name="keywords" content="C陷阱与缺陷">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第一章 词法陷阱">
 <meta property="og:url" content="http://yoursite.com/2019/07/07/C陷阱与缺陷(第一章_词法陷阱)/index.html">
 <meta property="og:site_name" content="咱老李">
-<meta property="og:description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==">
+<meta property="og:description" content="工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱=不同于==">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-07T02:12:56.746Z">
+<meta property="og:updated_time" content="2019-07-07T02:16:44.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第一章 词法陷阱">
-<meta name="twitter:description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==">
+<meta name="twitter:description" content="工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱=不同于==">
 
 
 
@@ -300,8 +300,8 @@
       
 
       
-        <h1 id="写在开始"><a href="#写在开始" class="headerlink" title="写在开始"></a>写在开始</h1><p>工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。</p>
-<h1 id="第一章-词法陷阱"><a href="#第一章-词法陷阱" class="headerlink" title="第一章 词法陷阱"></a>第一章 词法陷阱</h1><h2 id="1-1-不同于"><a href="#1-1-不同于" class="headerlink" title="1.1 =不同于=="></a>1.1 =不同于==</h2><a id="more"></a>
+        <p>工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。</p>
+<h1 id="第一章-词法陷阱"><a href="#第一章-词法陷阱" class="headerlink" title="第一章 词法陷阱"></a>第一章 词法陷阱</h1><h2 id="不同于"><a href="#不同于" class="headerlink" title="=不同于=="></a>=不同于==</h2><a id="more"></a>
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while(c = ' ' || c == '/t' || c == '/n')</span><br><span class="line">    c = getc(f);</span><br></pre></td></tr></table></figure>
 
@@ -317,8 +317,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ((filedesc == open(argv[i],0)) &lt; 0)</span><br><span class="line">	error();</span><br></pre></td></tr></table></figure>
 
 <p>比较运算符结果只能是 0 或 1 ， error() 将没有机会执行</p>
-<h2 id="1-2-amp-和-不同于-amp-amp-和"><a href="#1-2-amp-和-不同于-amp-amp-和" class="headerlink" title="1.2 &amp; 和 | 不同于 &amp;&amp; 和 ||"></a>1.2 &amp; 和 | 不同于 &amp;&amp; 和 ||</h2><p>很多语言对这些运算符的定义不同</p>
-<h2 id="1-3-词法分析中的“贪心法”"><a href="#1-3-词法分析中的“贪心法”" class="headerlink" title="1.3 词法分析中的“贪心法”"></a>1.3 词法分析中的“贪心法”</h2><p>C 语言字符符号</p>
+<h2 id="amp-和-不同于-amp-amp-和"><a href="#amp-和-不同于-amp-amp-和" class="headerlink" title="&amp; 和 | 不同于 &amp;&amp; 和 ||"></a>&amp; 和 | 不同于 &amp;&amp; 和 ||</h2><p>很多语言对这些运算符的定义不同</p>
+<h2 id="词法分析中的“贪心法”"><a href="#词法分析中的“贪心法”" class="headerlink" title="词法分析中的“贪心法”"></a>词法分析中的“贪心法”</h2><p>C 语言字符符号</p>
 <p>/  、* 、=        只有一个字符长，称为<strong>单字符符号</strong></p>
 <p>/*  、==    有多个字符，称为<strong>多字符符号</strong></p>
 <p>编译器分解符号的方法：</p>
@@ -362,7 +362,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a &gt;&gt; = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
 
 <p>在严格的 ANSI C 编译器则会报错</p>
-<h2 id="1-4-整形常量"><a href="#1-4-整形常量" class="headerlink" title="1.4 整形常量"></a>1.4 整形常量</h2><p>整形常量第一个字符是0，那么该常量将被视为 八进制数。</p>
+<h2 id="整形常量"><a href="#整形常量" class="headerlink" title="整形常量"></a>整形常量</h2><p>整形常量第一个字符是0，那么该常量将被视为 八进制数。</p>
 <p>10  和  010 的含义不同。</p>
 <p>此外，<strong><u>许多 C 编译器会把 8 和 9 也作为八进制数字处理</u></strong>。</p>
 <p>例如：</p>
@@ -372,7 +372,7 @@
 <p>有时候为了格式对齐，无意间就会写错</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> part_number;</span><br><span class="line">    <span class="keyword">char</span> *description;</span><br><span class="line">&#125;parttab[] =&#123;</span><br><span class="line">    <span class="number">046</span>, <span class="string">"left-handed widget"</span>,</span><br><span class="line">    <span class="number">047</span>, <span class="string">"right-handed widget"</span>,</span><br><span class="line">    <span class="number">125</span>, <span class="string">"frammis"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h2 id="1-5-字符与字符串"><a href="#1-5-字符与字符串" class="headerlink" title="1.5 字符与字符串"></a>1.5 字符与字符串</h2><p>用单引号引起的字符代表一个整数。</p>
+<h2 id="字符与字符串"><a href="#字符与字符串" class="headerlink" title="字符与字符串"></a>字符与字符串</h2><p>用单引号引起的字符代表一个整数。</p>
 <p>‘a’的含义与0141（八进制）或者97（十进制）严格一致</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"Hello world/n"</span>);</span><br></pre></td></tr></table></figure>
 
@@ -402,10 +402,12 @@
 <p>‘yes’ 代替 “yes”不会被编译器检测到。</p>
 <p>“yes”代表 ‘y’、’e’、’s’ 以及空字符 ‘\0’ 的 4 个连续内存单元的首地址。</p>
 <p>’yes‘ 大多编译器理解为，一个整数值，由 ‘y’、’e’、’s’ 所代表的整数值按照特定编译器实现中定义的方式组合得到。</p>
+<blockquote>
 <p>在Borland C++ v5.5 和 LCC v3.6中的做法</p>
 <p><strong>忽略多余的字符</strong>，最后的整数值即第一个字符的整数值</p>
 <p>在Visual C++ 6.0 和 GCC v2.95中的做法</p>
 <p>依次用后一个字符<strong>覆盖</strong>前一个字符，最后得到的整数值即最后一个字符的数值。</p>
+</blockquote>
 
       
     </div>
@@ -582,7 +584,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在开始"><span class="nav-number">1.</span> <span class="nav-text">写在开始</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-词法陷阱"><span class="nav-number">2.</span> <span class="nav-text">第一章 词法陷阱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-不同于"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 =不同于==</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-amp-和-不同于-amp-amp-和"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 &amp; 和 | 不同于 &amp;&amp; 和 ||</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-词法分析中的“贪心法”"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 词法分析中的“贪心法”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-整形常量"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 整形常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-字符与字符串"><span class="nav-number">2.5.</span> <span class="nav-text">1.5 字符与字符串</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-词法陷阱"><span class="nav-number">1.</span> <span class="nav-text">第一章 词法陷阱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不同于"><span class="nav-number">1.1.</span> <span class="nav-text">=不同于==</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-和-不同于-amp-amp-和"><span class="nav-number">1.2.</span> <span class="nav-text">&amp; 和 | 不同于 &amp;&amp; 和 ||</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词法分析中的“贪心法”"><span class="nav-number">1.3.</span> <span class="nav-text">词法分析中的“贪心法”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整形常量"><span class="nav-number">1.4.</span> <span class="nav-text">整形常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符与字符串"><span class="nav-number">1.5.</span> <span class="nav-text">字符与字符串</span></a></li></ol></li></ol></div>
             
 
           </div>
