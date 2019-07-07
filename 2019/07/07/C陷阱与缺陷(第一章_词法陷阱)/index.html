@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="C陷阱与缺陷,">
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="咱老李">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==12while(c = &apos; &apos; || c == &apos;/t&apos; || c == &apos;/n&apos;)    c = getc(f);  误将 == 写成 = ，造成死循环 某些 C 编译器在发现形如 e1 = e2 的表达式，会给出警告提示 当确实需要对变量进行复制并检查该变量的新值是否为0时，为了避">
+<meta name="keywords" content="C陷阱与缺陷">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一章 词法陷阱">
+<meta property="og:url" content="http://yoursite.com/2019/07/07/C陷阱与缺陷(第一章_词法陷阱)/index.html">
 <meta property="og:site_name" content="咱老李">
+<meta property="og:description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==12while(c = &apos; &apos; || c == &apos;/t&apos; || c == &apos;/n&apos;)    c = getc(f);  误将 == 写成 = ，造成死循环 某些 C 编译器在发现形如 e1 = e2 的表达式，会给出警告提示 当确实需要对变量进行复制并检查该变量的新值是否为0时，为了避">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-07T02:11:30.497Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="咱老李">
+<meta name="twitter:title" content="第一章 词法陷阱">
+<meta name="twitter:description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==12while(c = &apos; &apos; || c == &apos;/t&apos; || c == &apos;/n&apos;)    c = getc(f);  误将 == 写成 = ，造成死循环 某些 C 编译器在发现形如 e1 = e2 的表达式，会给出警告提示 当确实需要对变量进行复制并检查该变量的新值是否为0时，为了避">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/07/C陷阱与缺陷(第一章_词法陷阱)/">
 
 
 
 
 
-  <title>咱老李</title>
+  <title>第一章 词法陷阱 | 咱老李</title>
   
 
 
@@ -140,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,9 +218,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -246,9 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/07/C陷阱与缺陷(第一章_词法陷阱)/" itemprop="url">第一章 词法陷阱</a></h1>
+          <h1 class="post-title" itemprop="name headline">第一章 词法陷阱</h1>
         
 
         <div class="post-meta">
@@ -298,9 +300,7 @@
       
 
       
-        
-          
-            <h1 id="写在开始"><a href="#写在开始" class="headerlink" title="写在开始"></a>写在开始</h1><p>工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。</p>
+        <h1 id="写在开始"><a href="#写在开始" class="headerlink" title="写在开始"></a>写在开始</h1><p>工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。</p>
 <h1 id="第一章-词法陷阱"><a href="#第一章-词法陷阱" class="headerlink" title="第一章 词法陷阱"></a>第一章 词法陷阱</h1><h2 id="1-1-不同于"><a href="#1-1-不同于" class="headerlink" title="1.1 =不同于=="></a>1.1 =不同于==</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while(c = ' ' || c == '/t' || c == '/n')</span><br><span class="line">    c = getc(f);</span><br></pre></td></tr></table></figure>
 
 <p>误将 == 写成 = ，造成死循环</p>
@@ -405,8 +405,6 @@
 <p>在Visual C++ 6.0 和 GCC v2.95中的做法</p>
 <p>依次用后一个字符<strong>覆盖</strong>前一个字符，最后得到的整数值即最后一个字符的数值。</p>
 
-          
-        
       
     </div>
     
@@ -421,382 +419,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/WebDemo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="咱老李">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/28/WebDemo/" itemprop="url">WebDemo</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-28T00:00:00+08:00">
-                2019-04-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/C陷阱与缺陷/" rel="tag"># C陷阱与缺陷</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一年前玩过一阵子网站</p>
-<p>在慕课网跟着教程敲了几个有意思的小案例<br><a href="https://www.imooc.com/t/108955" target="_blank" rel="noopener">教程链接</a></p>
-<p><a href="http://imlihang.cn/webdemo/" target="_blank" rel="noopener">WebDemo</a><br>进入页面请点左上角的兔子<br>里边还有Unity导出的坦克游戏和飞机游戏</p>
-<p>研究过一下下 A-Frame<br><a href="http://imlihang.cn/webdemo/A-Frame/" target="_blank" rel="noopener">WebVR-A-Frame</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/15/AWS下ubuntu后台训练tensorflow模型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="咱老李">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/15/AWS下ubuntu后台训练tensorflow模型/" itemprop="url">AWS下ubuntu后台训练tensorflow模型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T00:00:00+08:00">
-                2019-04-15
-              </time>
+              <a href="/2019/04/28/WebDemo/" rel="next" title="WebDemo">
+                <i class="fa fa-chevron-left"></i> WebDemo
+              </a>
             
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>由于没钱买电脑等一系列原因，只能在云服务器上炼丹了。<br>AWS的竞价还算便宜，差不多2.5块钱一小时。<br>网上找到了系列教程 利用<a href="https://zhuanlan.zhihu.com/p/33173963" target="_blank" rel="noopener">AWS学习深度学习</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/15/AWS下ubuntu后台训练tensorflow模型/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/写在开始/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="咱老李">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/14/写在开始/" itemprop="url">写在开始</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T08:43:31+08:00">
-                2019-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>之前买了腾讯云<br>搭了Wordpress博客<br>imlihang.cn<br>贵呀,服务器到期了可咋整</p>
-<p>在B站看到了一个Up主<br><a href="https://space.bilibili.com/384068749/" target="_blank" rel="noopener">CodeSheep</a><br>感觉干货还是蛮多了<br>通过他的<br><a href="https://www.bilibili.com/video/av37128014" target="_blank" rel="noopener">https://www.bilibili.com/video/av37128014</a><br>搭建了该博客</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -806,10 +458,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -817,6 +470,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80Mzc5OS8yMDMzOA=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -837,8 +499,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -899,6 +570,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在开始"><span class="nav-number">1.</span> <span class="nav-text">写在开始</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-词法陷阱"><span class="nav-number">2.</span> <span class="nav-text">第一章 词法陷阱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-不同于"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 =不同于==</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-amp-和-不同于-amp-amp-和"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 &amp; 和 | 不同于 &amp;&amp; 和 ||</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-词法分析中的“贪心法”"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 词法分析中的“贪心法”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-整形常量"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 整形常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-字符与字符串"><span class="nav-number">2.5.</span> <span class="nav-text">1.5 字符与字符串</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1032,6 +719,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -1060,6 +751,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
