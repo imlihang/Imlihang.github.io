@@ -299,113 +299,15 @@
 
       
         
-          
-            <h1 id="写在开始"><a href="#写在开始" class="headerlink" title="写在开始"></a>写在开始</h1><p>工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。</p>
-<h1 id="第一章-词法陷阱"><a href="#第一章-词法陷阱" class="headerlink" title="第一章 词法陷阱"></a>第一章 词法陷阱</h1><h2 id="1-1-不同于"><a href="#1-1-不同于" class="headerlink" title="1.1 =不同于=="></a>1.1 =不同于==</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while(c = ' ' || c == '/t' || c == '/n')</span><br><span class="line">    c = getc(f);</span><br></pre></td></tr></table></figure>
-
-<p>误将 == 写成 = ，造成死循环</p>
-<p>某些 C 编译器在发现形如 e1 = e2 的表达式，会给出警告提示</p>
-<p>当确实需要对变量进行复制并检查该变量的新值是否为0时，为了避免警告，应该<strong>显式定义</strong>；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (x = y)</span><br><span class="line">	foo();</span><br></pre></td></tr></table></figure>
-
-<p>应写作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ((x = y) !=0 )</span><br><span class="line">	foo();</span><br></pre></td></tr></table></figure>
-
-<p>比较运算符误写成赋值运算符</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ((filedesc == open(argv[i],0)) &lt; 0)</span><br><span class="line">	error();</span><br></pre></td></tr></table></figure>
-
-<p>比较运算符结果只能是 0 或 1 ， error() 将没有机会执行</p>
-<h2 id="1-2-amp-和-不同于-amp-amp-和"><a href="#1-2-amp-和-不同于-amp-amp-和" class="headerlink" title="1.2 &amp; 和 | 不同于 &amp;&amp; 和 ||"></a>1.2 &amp; 和 | 不同于 &amp;&amp; 和 ||</h2><p>很多语言对这些运算符的定义不同</p>
-<h2 id="1-3-词法分析中的“贪心法”"><a href="#1-3-词法分析中的“贪心法”" class="headerlink" title="1.3 词法分析中的“贪心法”"></a>1.3 词法分析中的“贪心法”</h2><p>C 语言字符符号</p>
-<p>/  、* 、=        只有一个字符长，称为<strong>单字符符号</strong></p>
-<p>/*  、==    有多个字符，称为<strong>多字符符号</strong></p>
-<p>编译器分解符号的方法：</p>
-<p>从左到右一个字符地读入，如果该字符可能组成一个符号，那么再读入下一个字符，<strong>判断已经读入的两个字符组成的字符串是否可能是一个符号的组成部分</strong>；可能， 则读入，之后重复判断。</p>
-<p>符号中间不能嵌有空白（空格符、制表符、换行符）</p>
-<p>a—b   与  a – - b 含义相同</p>
-<p>与  a - – b含义不同</p>
-<hr>
-<p>如以下代码</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y = x<span class="comment">/*p      /* p指向除数 */</span></span><br></pre></td></tr></table></figure>
-
-<p>实际上 /* 被编译器理解为<strong>一段注释的开始</strong></p>
-<p>需要重写为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y = x / *p      <span class="comment">/* p指向除数 */</span></span><br></pre></td></tr></table></figure>
-
-<p>或者更加清楚的写作：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y = x/(*p)      <span class="comment">/* p指向除数 */</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>诸如此类的准二义性问题</p>
-<p>老版本的 C 语言中允许使用 =+ 来代表 +=。老版本的编译器会将</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">-1</span></span><br></pre></td></tr></table></figure>
-
-<p>理解为下面的语句</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a =- <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>即</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = a - <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>但是程序员的愿意是</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">-1</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>/*看上去像一段注释的开始，在老版本的编译器会将</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="comment">/*b;</span></span><br></pre></td></tr></table></figure>
-
-<p>当作</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a =/ *b;</span><br></pre></td></tr></table></figure>
-
-<p>老版本编译器会将复合赋值视为两个符号，下面的程序不会报错</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a &gt;&gt; = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-
-<p>在严格的 ANSI C 编译器则会报错</p>
-<h2 id="1-4-整形常量"><a href="#1-4-整形常量" class="headerlink" title="1.4 整形常量"></a>1.4 整形常量</h2><p>整形常量第一个字符是0，那么该常量将被视为 八进制数。</p>
-<p>10  和  010 的含义不同。</p>
-<p>此外，<strong><u>许多 C 编译器会把 8 和 9 也作为八进制数字处理</u></strong>。</p>
-<p>例如：</p>
-<p>0195 含义是 1x8^2 + 9x8^1 + 5x8^0 ，就是 141（十进制）或者 215（八进制）</p>
-<p>不建议这样做，ANSI C 标准禁止这样的做法</p>
-<hr>
-<p>有时候为了格式对齐，无意间就会写错</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> part_number;</span><br><span class="line">    <span class="keyword">char</span> *description;</span><br><span class="line">&#125;parttab[] =&#123;</span><br><span class="line">    <span class="number">046</span>, <span class="string">"left-handed widget"</span>,</span><br><span class="line">    <span class="number">047</span>, <span class="string">"right-handed widget"</span>,</span><br><span class="line">    <span class="number">125</span>, <span class="string">"frammis"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-5-字符与字符串"><a href="#1-5-字符与字符串" class="headerlink" title="1.5 字符与字符串"></a>1.5 字符与字符串</h2><p>用单引号引起的字符代表一个整数。</p>
-<p>‘a’的含义与0141（八进制）或者97（十进制）严格一致</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"Hello world/n"</span>);</span><br></pre></td></tr></table></figure>
-
-<p>  与</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char hello[] = &#123;'H','e','l','l','o',' ','w','o','r','l','d','/n''0'&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>等效</p>
-<hr>
-<p>单括号括起的一个字符代表一个整数</p>
-<p>双括号括起的一个字符代表一个指针</p>
-<p>两者混用就会引起错误</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *slash = <span class="string">'/'</span></span><br></pre></td></tr></table></figure>
-
-<p>默写 C 编译器对函数参数不进行类型检查</p>
-<p>如果使用</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf('/n')</span><br></pre></td></tr></table></figure>
-
-<p>来替代</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"/n"</span>)</span><br></pre></td></tr></table></figure>
-
-<p>就会发生错误。</p>
-<blockquote>
-<p>现在的编译器一般能够检测到在函数调用时昏庸单引号和双引号的情形。</p>
-</blockquote>
-<p><strong>整数型（一般为16位或32位）的存储空间可以容纳多个字符（一般为8位）</strong></p>
-<p>所以 C 编译器允许在一个字符常量（以及字符串常量）中包含多个字符。</p>
-<p>‘yes’ 代替 “yes”不会被编译器检测到。</p>
-<p>“yes”代表 ‘y’、’e’、’s’ 以及空字符 ‘\0’ 的 4 个连续内存单元的首地址。</p>
-<p>’yes‘ 大多编译器理解为，一个整数值，由 ‘y’、’e’、’s’ 所代表的整数值按照特定编译器实现中定义的方式组合得到。</p>
-<p>在Borland C++ v5.5 和 LCC v3.6中的做法</p>
-<p><strong>忽略多余的字符</strong>，最后的整数值即第一个字符的整数值</p>
-<p>在Visual C++ 6.0 和 GCC v2.95中的做法</p>
-<p>依次用后一个字符<strong>覆盖</strong>前一个字符，最后得到的整数值即最后一个字符的数值。</p>
-
-          
+          <h1 id="写在开始"><a href="#写在开始" class="headerlink" title="写在开始"></a>写在开始</h1><p>工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。</p>
+<h1 id="第一章-词法陷阱"><a href="#第一章-词法陷阱" class="headerlink" title="第一章 词法陷阱"></a>第一章 词法陷阱</h1><h2 id="1-1-不同于"><a href="#1-1-不同于" class="headerlink" title="1.1 =不同于=="></a>1.1 =不同于==</h2>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/07/C陷阱与缺陷(第一章_词法陷阱)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

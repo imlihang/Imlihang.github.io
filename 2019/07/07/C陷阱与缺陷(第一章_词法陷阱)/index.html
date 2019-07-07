@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==12while(c = &apos; &apos; || c == &apos;/t&apos; || c == &apos;/n&apos;)    c = getc(f);  误将 == 写成 = ，造成死循环 某些 C 编译器在发现形如 e1 = e2 的表达式，会给出警告提示 当确实需要对变量进行复制并检查该变量的新值是否为0时，为了避">
+<meta name="description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==">
 <meta name="keywords" content="C陷阱与缺陷">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第一章 词法陷阱">
 <meta property="og:url" content="http://yoursite.com/2019/07/07/C陷阱与缺陷(第一章_词法陷阱)/index.html">
 <meta property="og:site_name" content="咱老李">
-<meta property="og:description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==12while(c = &apos; &apos; || c == &apos;/t&apos; || c == &apos;/n&apos;)    c = getc(f);  误将 == 写成 = ，造成死循环 某些 C 编译器在发现形如 e1 = e2 的表达式，会给出警告提示 当确实需要对变量进行复制并检查该变量的新值是否为0时，为了避">
+<meta property="og:description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-07T02:11:30.497Z">
+<meta property="og:updated_time" content="2019-07-07T02:12:56.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第一章 词法陷阱">
-<meta name="twitter:description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==12while(c = &apos; &apos; || c == &apos;/t&apos; || c == &apos;/n&apos;)    c = getc(f);  误将 == 写成 = ，造成死循环 某些 C 编译器在发现形如 e1 = e2 的表达式，会给出警告提示 当确实需要对变量进行复制并检查该变量的新值是否为0时，为了避">
+<meta name="twitter:description" content="写在开始工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。 第一章 词法陷阱1.1 =不同于==">
 
 
 
@@ -301,7 +301,9 @@
 
       
         <h1 id="写在开始"><a href="#写在开始" class="headerlink" title="写在开始"></a>写在开始</h1><p>工作中经常用到 C 语言，看了下这本《C陷阱与缺陷》，顺便做下记录。</p>
-<h1 id="第一章-词法陷阱"><a href="#第一章-词法陷阱" class="headerlink" title="第一章 词法陷阱"></a>第一章 词法陷阱</h1><h2 id="1-1-不同于"><a href="#1-1-不同于" class="headerlink" title="1.1 =不同于=="></a>1.1 =不同于==</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while(c = ' ' || c == '/t' || c == '/n')</span><br><span class="line">    c = getc(f);</span><br></pre></td></tr></table></figure>
+<h1 id="第一章-词法陷阱"><a href="#第一章-词法陷阱" class="headerlink" title="第一章 词法陷阱"></a>第一章 词法陷阱</h1><h2 id="1-1-不同于"><a href="#1-1-不同于" class="headerlink" title="1.1 =不同于=="></a>1.1 =不同于==</h2><a id="more"></a>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while(c = ' ' || c == '/t' || c == '/n')</span><br><span class="line">    c = getc(f);</span><br></pre></td></tr></table></figure>
 
 <p>误将 == 写成 = ，造成死循环</p>
 <p>某些 C 编译器在发现形如 e1 = e2 的表达式，会给出警告提示</p>
