@@ -341,51 +341,15 @@
 
       
         
-          
-            <p>由于没钱买电脑等一系列原因，只能在云服务器上炼丹了。</p>
+          <p>由于没钱买电脑等一系列原因，只能在云服务器上炼丹了。</p>
 <p>AWS的竞价还算便宜，差不多2.5块钱一小时。</p>
-<p> 网上找到了系列教程 <a href="https://zhuanlan.zhihu.com/p/33173963" target="_blank" rel="noopener">利用AWS学习深度学习</a></p>
-<p> 使用的是这样的主机。 </p>
-<p><img src="https://github.com/imlihang/BlogImage/blob/master/2019/11/23/aws-768x99.png?raw=true" alt="主机类型"></p>
-<p> 大概流程是 </p>
-<ol>
-<li>网上开主机 </li>
-<li>配置主机的Jupyter </li>
-<li>上传数据 </li>
-<li>使用本机访问服务器上的Jupyter </li>
-</ol>
-<p>但是， 我经过使用发现了问题。 </p>
-<p>网络连接不稳定，掉线，之后Jupyter 可能连不上，导致训练终止。</p>
-<p>悲剧！</p>
-<p>之后想到能不能用在后台跑程序，模型跑好在拷贝出来。</p>
-<p> 在<a href="http://www.cnblogs.com/master-pokemon/p/5790783.html" target="_blank" rel="noopener"> linux 下后台运行python脚本</a> 找到了这个命令 </p>
-<p> <code>$ nohup python -u test.py &gt; out.log 2&gt;&amp;1 &amp;</code> </p>
-<p> test.py是你写好的python脚本，运行之后会在与test.py同目录下生成 out.log 文件 ，你脚本打印出来的数据会保存在改文件中。 </p>
-<p>你以为就这样结束了吗？ NO!</p>
-<p>在云服务器执行 python 命令默认调用的是其自带的python2.7程序，而我们需要调用的是Anaconda中的python程序</p>
-<p>我们需要修改 python 马甲！</p>
-<p>进入服务器中的 etc 目录</p>
-<p>使用 vim 打开 profile 文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim profile</span><br></pre></td></tr></table></figure>
-
-<p> 添加 python 路径 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/home/ubuntu/anaconda/bin:$PATH</span><br></pre></td></tr></table></figure>
-
-<p> 强制保存 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:w !sudo tee %</span><br></pre></td></tr></table></figure>
-
-<p>强制退出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:q!</span><br></pre></td></tr></table></figure>
-
-<p>输入以下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alias python=&quot;/home/ubuntu/anaconda/bin/python3.6&quot;</span><br><span class="line">. ~/.bashrc</span><br></pre></td></tr></table></figure>
-
-<p>之后运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nohup python -u test.py &gt; out.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-
-<p>搞定！</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/11/23/AWS后台训练tensorflow模型/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
