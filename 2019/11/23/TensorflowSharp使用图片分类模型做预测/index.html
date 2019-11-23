@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Tensorflow,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="如何在C#中加载图片使用 Tensorflow 训练好的模型做图片分类呢？ 小弟不才，只在 Github 中，找到了这么一个相关的开源程序。 Dog-or-Cat-TensorflowSharp-Example 现在我们来 look 一下，这个程序中是如何加载图片做预测的。">
+<meta name="keywords" content="Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorflowSharp使用图片分类模型做预测">
+<meta property="og:url" content="http://yoursite.com/2019/11/23/TensorflowSharp使用图片分类模型做预测/index.html">
+<meta property="og:site_name" content="咱老李">
+<meta property="og:description" content="如何在C#中加载图片使用 Tensorflow 训练好的模型做图片分类呢？ 小弟不才，只在 Github 中，找到了这么一个相关的开源程序。 Dog-or-Cat-TensorflowSharp-Example 现在我们来 look 一下，这个程序中是如何加载图片做预测的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-23T09:01:07.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorflowSharp使用图片分类模型做预测">
+<meta name="twitter:description" content="如何在C#中加载图片使用 Tensorflow 训练好的模型做图片分类呢？ 小弟不才，只在 Github 中，找到了这么一个相关的开源程序。 Dog-or-Cat-TensorflowSharp-Example 现在我们来 look 一下，这个程序中是如何加载图片做预测的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/23/TensorflowSharp使用图片分类模型做预测/">
+
+
+
+
+
+  <title>TensorflowSharp使用图片分类模型做预测 | 咱老李</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">咱老李</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/23/TensorflowSharp使用图片分类模型做预测/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="咱老李">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="咱老李">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorflowSharp使用图片分类模型做预测</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-23T16:26:31+08:00">
+                2019-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/模型调用/" itemprop="url" rel="index">
+                    <span itemprop="name">模型调用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如何在C#中加载图片使用 Tensorflow 训练好的模型做图片分类呢？</p>
+<p>小弟不才，只在 Github 中，找到了这么一个相关的开源程序。</p>
+<p><a href="https://github.com/hwvs/Dog-or-Cat-TensorflowSharp-Example" target="_blank" rel="noopener">Dog-or-Cat-TensorflowSharp-Example</a></p>
+<p>现在我们来 look 一下，这个程序中是如何加载图片做预测的。</p>
+<a id="more"></a>
+
+<p>首先，程序用一些方法将图片数据转换成 byte[] 数组（这里就不多说了）。</p>
+<p>之后将 byte[] 数据怼成张量。</p>
+<p>使用的是这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var tensor = TFTensor.CreateString(contents);</span><br></pre></td></tr></table></figure>
+
+<p>contents 指的是转化的 byte[] 数组，返回值就是一个 TFTensor 类型的数据。</p>
+<p>下面说两个比较重要的函数</p>
+<p><strong>标准化图片的计算图</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">private static void ConstructGraphToNormalizeImage(out TFGraph graph, out TFOutput input, </span><br><span class="line">    out TFOutput output, TFDataType destinationDataType = TFDataType.Float)</span><br><span class="line">&#123;</span><br><span class="line">    //定义计算图</span><br><span class="line">    graph = new TFGraph();</span><br><span class="line"></span><br><span class="line">    //定义输出占位符</span><br><span class="line">    input = graph.Placeholder(TFDataType.String);</span><br><span class="line"></span><br><span class="line">    //定义输出张量</span><br><span class="line">    output = graph.Cast(graph.Div(</span><br><span class="line">        x: graph.Sub(</span><br><span class="line">            x: graph.ResizeBilinear(</span><br><span class="line">                images: graph.ExpandDims(</span><br><span class="line">                    input: graph.Cast(</span><br><span class="line">                        graph.DecodeJpeg(contents: input, channels: 3), DstT: TFDataType.Float),</span><br><span class="line">                    dim: graph.Const(0, &quot;make_batch&quot;)),</span><br><span class="line">                size: graph.Const(new int[] &#123; W, H &#125;, &quot;size&quot;)),</span><br><span class="line">            y: graph.Const(Mean, &quot;mean&quot;)),</span><br><span class="line">        y: graph.Const(Scale, &quot;scale&quot;)), destinationDataType);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义输出真是一环接一环，我第一眼也看懵了，之后仔细一看，嘿嘿。</p>
+<p>从里到外啰嗦一下。</p>
+<p>假设图片大小为 n</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.DecodeJpeg</span><br></pre></td></tr></table></figure>
+
+<p>tensorflow解析图片的函数，input 就是输入张量（经过byte[]数组转化而来），channels 就是通道数了，解析后的shape为[n, n, 3]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.Cast</span><br></pre></td></tr></table></figure>
+
+<p>数据类型转换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.ExpadngDims</span><br></pre></td></tr></table></figure>
+
+<p>扩展维度，这时候的 shape 变为 [1, n, n, 3]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.Const</span><br></pre></td></tr></table></figure>
+
+<p>定义常量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.ResizeBilinear</span><br></pre></td></tr></table></figure>
+
+<p>改变尺寸，这里将图片变为了 128×128 估计这个模型的输入是 128×128 大小的图片</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.Sub</span><br></pre></td></tr></table></figure>
+
+<p>图像数据减去均值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.Div</span><br></pre></td></tr></table></figure>
+
+<p>图像数据除以标准差</p>
+<p>后边两步做的是归一化的过程，如果训练的时候做了归一化处理，这里要减去相应的均值，除去相应的标准差。</p>
+<p>可以使用 OpenCVSharp 做均值和标准差的计算。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cv2.MeanStdDev(gray, mean,stddev);</span><br><span class="line">double m = mean.At&lt;double&gt;(0);</span><br><span class="line">double std = stddev.At&lt;double&gt;(0);</span><br></pre></td></tr></table></figure>
+
+<p> <strong>创建张量函数</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public static TFTensor CreateTensor(TFTensor tensor, TFDataType destinationDataType = TFDataType.Float)</span><br><span class="line">&#123;</span><br><span class="line">    TFGraph graph;</span><br><span class="line">    TFOutput input, output;</span><br><span class="line"></span><br><span class="line">    // Construct a graph to normalize the image</span><br><span class="line">    ConstructGraphToNormalizeImage(out graph, out input, out output, destinationDataType);</span><br><span class="line"></span><br><span class="line">    // Execute that graph to normalize this one image</span><br><span class="line">    using (var session = new TFSession(graph))</span><br><span class="line">    &#123;</span><br><span class="line">        var normalized = session.Run(</span><br><span class="line">                    inputs: new[] &#123; input &#125;,</span><br><span class="line">                    inputValues: new[] &#123; tensor &#125;,</span><br><span class="line">                    outputs: new[] &#123; output &#125;);</span><br><span class="line">        return normalized[0];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 session.Run() 来使用我们之前定义好的计算图</p>
+<p>传入三个变量</p>
+<ul>
+<li>input 输入值的占位符</li>
+<li>inputValues 输入值</li>
+<li>outputs  输出</li>
+</ul>
+<p>之后用这样的数据做预测就OK了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var runner = session.GetRunner();</span><br><span class="line"></span><br><span class="line">runner.AddInput(graph[&quot;input&quot;][0], tensor).Fetch(graph[&quot;final_result&quot;][0]);</span><br><span class="line"></span><br><span class="line">var output = runner.Run();</span><br><span class="line"></span><br><span class="line">var result = output[0];</span><br></pre></td></tr></table></figure>
+
+<p>小发现</p>
+<p>在 TensorflowSharp 中使用计算图有两种方式：</p>
+<p>session.Run()</p>
+<p>session.GetRunner().AddInput().Fetch().run()</p>
+<p>之后尝试使用第二种方式加载标准化图片的计算图，也是可以的。</p>
+<p>使用第二种方式记得要给张量命名。这里将 input 命名为 imageInput，output 命名为 imageOutput</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">private static void ConstructGraphToNormalizeImage(out TFGraph graph, out TFOutput input, out TFOutput output, TFDataType destinationDataType = TFDataType.Float)</span><br><span class="line">&#123;</span><br><span class="line">    graph = new TFGraph();</span><br><span class="line">    input = graph.Placeholder(TFDataType.String, operName: &quot;imageInput&quot;);</span><br><span class="line"></span><br><span class="line">    output = graph.Cast(graph.Div(</span><br><span class="line">        x: graph.Sub(</span><br><span class="line">            x: graph.ResizeBilinear(</span><br><span class="line">                images: graph.ExpandDims(</span><br><span class="line">                    input: graph.Cast(</span><br><span class="line">                        graph.DecodeJpeg(contents: input, channels: 3), DstT: TFDataType.Float),</span><br><span class="line">                    dim: graph.Const(0, &quot;make_batch&quot;)),</span><br><span class="line">                size: graph.Const(new int[] &#123; W, H &#125;, &quot;size&quot;)),</span><br><span class="line">            y: graph.Const(Mean, &quot;mean&quot;)),</span><br><span class="line">        y: graph.Const(Scale, &quot;scale&quot;)), destinationDataType, operName: &quot;imageOutput&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public static TFTensor CreateTensor(TFTensor tensor, TFDataType destinationDataType = TFDataType.Float)</span><br><span class="line">&#123;</span><br><span class="line">    TFGraph graph;</span><br><span class="line">    TFOutput input, output;</span><br><span class="line"></span><br><span class="line">    // Construct a graph to normalize the image</span><br><span class="line">    ConstructGraphToNormalizeImage(out graph, out input, out output, destinationDataType);</span><br><span class="line"></span><br><span class="line">    // Execute that graph to normalize this one image</span><br><span class="line">    using (var session = new TFSession(graph))</span><br><span class="line">    &#123;</span><br><span class="line">        var outImage = session.GetRunner().AddInput(graph[&quot;imageInput&quot;][0], tensor)</span><br><span class="line">            .Fetch(graph[&quot;imageOutput&quot;][0]);</span><br><span class="line">        var normalized = outImage.Run();</span><br><span class="line">        return normalized[0];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 行吧！就玩到这里了。。。 </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tensorflow/" rel="tag"># Tensorflow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/23/TensorflowSharp加载.pb文件/" rel="next" title="TensorflowSharp加载.pb文件">
+                <i class="fa fa-chevron-left"></i> TensorflowSharp加载.pb文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/23/浏览器使用TensorflowJS/" rel="prev" title="浏览器使用TensorflowJS">
+                浏览器使用TensorflowJS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80Mzc5OS8yMDMzOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">咱老李</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/imlihang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:363461885@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">咱老李</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
