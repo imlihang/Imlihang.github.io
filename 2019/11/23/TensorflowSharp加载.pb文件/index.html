@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="咱老李">
 <meta property="og:description" content="利用Python语言编程实现Tensorflow模型的训练是简单高效的 但是很多软件都是基于其它语言开发的 如何使用其它编程语言来调用Tensorflow模型应用于软件中 接下来就借用TensorflowSharp使用C#语言玩一下。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://github.com/imlihang/BlogImage/blob/master/2019/11/23/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png?raw=true">
-<meta property="og:updated_time" content="2019-11-23T09:08:17.273Z">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2019/11/23/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
+<meta property="og:updated_time" content="2019-12-01T07:28:41.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorflowSharp加载.pb文件">
 <meta name="twitter:description" content="利用Python语言编程实现Tensorflow模型的训练是简单高效的 但是很多软件都是基于其它语言开发的 如何使用其它编程语言来调用Tensorflow模型应用于软件中 接下来就借用TensorflowSharp使用C#语言玩一下。">
-<meta name="twitter:image" content="https://github.com/imlihang/BlogImage/blob/master/2019/11/23/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png?raw=true">
+<meta name="twitter:image" content="https://github.com/imlihang/BlogImage/raw/master/2019/11/23/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
 
 
 
@@ -373,7 +373,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var graph = new TFGraph();</span><br><span class="line">            graph.Import(File.ReadAllBytes(&quot;model/model.pb&quot;), &quot;&quot;);</span><br><span class="line">            var session = new TFSession(graph);</span><br><span class="line">            //这里创建了两个三维的向量</span><br><span class="line">            TFTensor tensor = new[,] &#123; &#123; 1.0f, 5.0f, 5.0f &#125;, &#123; 3.0f, 4.0f, 5.0f &#125; &#125;;</span><br><span class="line"></span><br><span class="line">            var runner = session.GetRunner();</span><br><span class="line">            runner.AddInput(graph[&quot;input&quot;][0], tensor).Fetch(graph[&quot;y&quot;][0]);</span><br><span class="line">            var output = runner.Run();</span><br><span class="line">            var result = output[0];</span><br><span class="line"></span><br><span class="line">            for (int i = 0; i &lt; ((float[][])result.GetValue(jagged: true)).Length; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                float[] a = ((float[][])result.GetValue(jagged: true))[i];</span><br><span class="line">                string s = null;</span><br><span class="line">                for (int j = 0; j &lt; a.Length; j++)</span><br><span class="line">                &#123;</span><br><span class="line">                    s = s + a[j] + &quot;,&quot;;</span><br><span class="line">                &#125;</span><br><span class="line">                Console.WriteLine(s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p> 运行结果： </p>
-<p><img src="https://github.com/imlihang/BlogImage/blob/master/2019/11/23/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png?raw=true" alt="运行结果"></p>
+<p><img src="https://github.com/imlihang/BlogImage/raw/master/2019/11/23/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="运行结果"></p>
 <p>之后也可以利用C#制作简单的窗体软件，调用模型预测结果了。</p>
 <p>P.S. 如果想在Unity中使用TensorflowSharp，建议去下载Unity相关的插件。 <a href="https://s3.amazonaws.com/unity-ml-agents/0.3/TFSharpPlugin.unitypackage" target="_blank" rel="noopener">插件链接</a></p>
 

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="咱老李">
 <meta property="og:description" content="语义“陷阱”指针与数组C 语言中的数组值得注意的地方有以下两点：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-23T08:40:20.563Z">
+<meta property="og:updated_time" content="2019-12-01T08:05:55.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第三章 语义陷阱">
 <meta name="twitter:description" content="语义“陷阱”指针与数组C 语言中的数组值得注意的地方有以下两点：">
@@ -359,6 +359,23 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> calendat[<span class="number">12</span>][<span class="number">13</span>];</span><br></pre></td></tr></table></figure>
 
 <p>该语句声明了 calendat 是一个数组，该数组拥有 12 个数组类型的元素，其中每个元素都是一个拥有 31 个整型元素的数组。因此， sizeof(calendat) 的值是 372 ( 31 X 12 ) 与 sizeof(int) 的乘积。</p>
+<p>任何指针都是指向某种类型的变量。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *ip;</span><br></pre></td></tr></table></figure>
+
+<p>ip 是一个指向整型变量的指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br></pre></td></tr></table></figure>
+
+<p>可以将整型变量 i 的地址赋给指针 ip</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip = &amp;i;</span><br></pre></td></tr></table></figure>
+
+<p>如果给 *ip 赋值，就能改变 i 的取值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*ip = <span class="number">17</span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果一个指针指向的是数组中一个元素，那么只要给这个指针加 1，就能够得到指向该数组中下一个元素的指针。</p>
+<p>如果两个指针指向的是同一个数组中的元素，我们可以把这两个指针相减。这么做是有意义的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *q = p + i;</span><br></pre></td></tr></table></figure>
+
+<p>可以通过 q - p 得到 i 的值。如果 p 与 q 指向的不是同一个数组中的元素，及时它们所指向的地址在内存中的位置正好间隔一个数组元素的整数倍，所得的结果仍然是无法保证其正确的。</p>
 
       
     </div>
