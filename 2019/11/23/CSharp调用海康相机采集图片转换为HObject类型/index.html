@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="之前使用Halcon采集图片调用海康相机出现了一些问题，所以不得不用相机SDK来进行图片采集。 后来发现通过SDK调用相机很方便，可以调节曝光时间，调用多个相机也比较方便。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用CSharp调用海康相机采集图片并转换HObject类型">
+<meta property="og:url" content="http://example.com/2019/11/23/CSharp%E8%B0%83%E7%94%A8%E6%B5%B7%E5%BA%B7%E7%9B%B8%E6%9C%BA%E9%87%87%E9%9B%86%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E4%B8%BAHObject%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="咱老李">
+<meta property="og:description" content="之前使用Halcon采集图片调用海康相机出现了一些问题，所以不得不用相机SDK来进行图片采集。 后来发现通过SDK调用相机很方便，可以调节曝光时间，调用多个相机也比较方便。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-23T08:34:31.000Z">
+<meta property="article:modified_time" content="2019-11-23T09:35:20.103Z">
+<meta property="article:author" content="Henry">
+<meta property="article:tag" content="Halcon">
+<meta property="article:tag" content="CSharp">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2019/11/23/CSharp%E8%B0%83%E7%94%A8%E6%B5%B7%E5%BA%B7%E7%9B%B8%E6%9C%BA%E9%87%87%E9%9B%86%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E4%B8%BAHObject%E7%B1%BB%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>利用CSharp调用海康相机采集图片并转换HObject类型 | 咱老李</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">咱老李</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">个人博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/23/CSharp%E8%B0%83%E7%94%A8%E6%B5%B7%E5%BA%B7%E7%9B%B8%E6%9C%BA%E9%87%87%E9%9B%86%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E4%B8%BAHObject%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="咱老李">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用CSharp调用海康相机采集图片并转换HObject类型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-11-23 16:34:31 / 修改时间：17:35:20" itemprop="dateCreated datePublished" datetime="2019-11-23T16:34:31+08:00">2019-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B5%B7%E5%BA%B7%E7%9B%B8%E6%9C%BA%E7%9A%84CSharp%E8%B0%83%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">海康相机的CSharp调用</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>之前使用Halcon采集图片调用海康相机出现了一些问题，所以不得不用相机SDK来进行图片采集。</p>
+<p>后来发现通过SDK调用相机很方便，可以调节曝光时间，调用多个相机也比较方便。</p>
+<span id="more"></span>
+
+<p>目前使用的海康相机型号为 MV-CA060-11GM ，分辨率为3072×2048。</p>
+<p>转换的过程其实只需要一行代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HOperatorSet.GenImage1(<span class="keyword">out</span> image, type, width, height, pData);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>image            输出的HObject类型的变量</li>
+<li>type             数据的类型</li>
+<li>width            图片的宽</li>
+<li>height           图片的高</li>
+<li>pData           保存图片数据的缓存地址</li>
+</ul>
+<p>这玩意儿咋用呢？</p>
+<p>研究了一下海康给出的示例 MultipleDemo</p>
+<p>海康相机采集后的图片信息是通过回调函数接收进行调用的。</p>
+<p>以软触发程序为例。m_pOperator[i] 是一个 CameraOperator 对象，它可以用来触发第 i 个相机。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bnTriggerExec_Click</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> nRet;</span><br><span class="line">    <span class="comment">//遍历所有的相机，触发它们所绑定的回调函数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; m_nCanOpenDeviceNum; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        nRet = m_pOperator[i].CommandExecute(<span class="string">&quot;TriggerSoftware&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (CameraOperator.CO_OK != nRet)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> temp = <span class="string">&quot;第&quot;</span> + (i + <span class="number">1</span>).ToString() + <span class="string">&quot;台设备触发失败!&quot;</span>;</span><br><span class="line">            MessageBox.Show(temp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回调函数有三个参数：</p>
+<ul>
+<li>pData       保存图像数据的缓存地址</li>
+<li>pFrameInfo  获取到的帧信息，包括宽、高、像素格式等</li>
+<li>pUser       用户数据</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ImageCallBack1</span>(<span class="params">IntPtr pData, <span class="keyword">ref</span> MyCamera.MV_FRAME_OUT_INFO pFrameInfo, IntPtr pUser</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> nIndex=(<span class="built_in">int</span>) pUser;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//抓取的帧数</span></span><br><span class="line">    ++m_nFrames[nIndex];</span><br><span class="line">    <span class="comment">// 这行代码放在这里</span></span><br><span class="line">    HOperatorSet.GenImage1(<span class="keyword">out</span> ho_Imagetemp, <span class="string">&quot;byte&quot;</span>, <span class="number">3072</span>, <span class="number">2048</span>, pData);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以使用 Halcon 的算子对获取到的 HObject 对象进行操作了。</p>
+<p>具体如何调用多个相机绑定回调函数可以参照官方给出的相关示例。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Halcon/" rel="tag"># Halcon</a>
+              <a href="/tags/CSharp/" rel="tag"># CSharp</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/23/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BD%BF%E7%94%A8TensorflowJS/" rel="prev" title="浏览器使用TensorflowJS">
+      <i class="fa fa-chevron-left"></i> 浏览器使用TensorflowJS
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/23/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" rel="next" title="线性回归梯度下降的简单实现">
+      线性回归梯度下降的简单实现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Henry</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/imlihang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;imlihang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:363461885@qq.com" title="E-Mail → mailto:363461885@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Henry</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
