@@ -20,28 +20,241 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="咱老李">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="C++ Standard Library vs. Standard Template LibraryC++ 标准库，编译器提供了 标准库所有的头文件， STL  标准模板库，包含 6 大组件 C++ 标准库 &gt;  STL 标准模板库  不同编译器的 STL 使用方法几乎完全一样 STL 六大部件 容器用来存储数据 分配器用来为容器分配内存 算法通过迭代器访问数据  count_if 范围内满">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL与泛型编程">
+<meta property="og:url" content="http://example.com/2023/02/19/STL%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="咱老李">
+<meta property="og:description" content="C++ Standard Library vs. Standard Template LibraryC++ 标准库，编译器提供了 标准库所有的头文件， STL  标准模板库，包含 6 大组件 C++ 标准库 &gt;  STL 标准模板库  不同编译器的 STL 使用方法几乎完全一样 STL 六大部件 容器用来存储数据 分配器用来为容器分配内存 算法通过迭代器访问数据  count_if 范围内满">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230219212258600.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230220192433676.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230220193157143.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230220194444295.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230220194755799.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230220195417690.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230220195830686.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230220210523310.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230220210914454.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230222192445663.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230222202913719.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230222203502491.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230224204342960.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230224205808789.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230224210013888.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230224210753508.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230224211454228.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230224211917680.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230224211924952.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225093315502.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225093529985.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225095655839.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225202838006.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225202844089.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225202910673.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225203007756.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225203118319.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225203125456.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225203130877.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230225203536271.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226184403583.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226184412843.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226184604371.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226184905547.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226184909839.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226184914388.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226184920272.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226185932016.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226185937516.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226190016680.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226190903904.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226191520720.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230226191616757.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227193922968.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227194105883.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227194131171.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227195138862.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227195834435.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227200115500.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227200121224.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227200948665.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227202114481.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227202504789.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230227202516406.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230302195247105.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319153556627.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319153605924.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319154156980.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319154205944.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319154223340.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319154827577.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319154833452.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319155516876.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319160123279.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319160917208.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319162548867.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319163140362.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319163536101.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319165021365.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319170328799.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319172009714.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319172258111.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319172454828.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230319172508238.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230325162650661.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230325162738147.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230325162905118.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230325163642617.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230325164005935.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230325165124415.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230325165134732.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326163959771.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326164004026.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326164019896.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326165554344.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326165731166.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326170215913.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326171156888.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326172003437.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326173808204.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326173916410.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326174651722.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230326175156047.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402120211117.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402120303305.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402120454564.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402120515796.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402120828413.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402120845318.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402121620880.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402121058506.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402123625203.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402124843213.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402124810798.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402140424149.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402140428651.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402140436552.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402140443572.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402141230280.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402141748193.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402142329093.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402143034722.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402151114574.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402151500423.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402152434599.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402152941186.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402152947075.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402153736280.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402161709425.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402162757100.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402163841988.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402165129090.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402170657429.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402171122637.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402172317190.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402175053840.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402175100544.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402175105449.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402175117464.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402183243161.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230402183248456.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230729163709837.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230729164416622.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230729165646012.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230729171120270.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230729180517956.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230729181031248.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230729181630375.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230809203604180.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230809204853613.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230810193758187.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230810193826962.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230810194035071.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230810195535783.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230810200221351.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230812194510444.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230812200309943.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230812201008512.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230812201441966.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230812203355789.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230812203327459.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230813153928015.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230813154246025.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230813213707788.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230813214215660.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230813214619164.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230813215244076.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230813220502935.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230813221211204.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230815201809620.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230815210124354.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230815213626345.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230816203759517.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230816204205063.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230816210951499.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230816210957987.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230816211005014.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230828201208327.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230828202341781.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230906203848509.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230906203909937.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230906204625697.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230906204645119.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230906205013669.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230906205123247.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230906205644144.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230914213542645.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230914214525087.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916090826613.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916090847529.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916091151682.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916091423619.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916091453065.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916092448488.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916092455357.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916092501924.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916093623966.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916093634792.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916093644704.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916173209871.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916173823329.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916174121739.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916174540684.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230916174841180.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917093700847.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917093708546.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917093715366.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917093722334.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917093729426.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917093757490.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917093803249.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917094843213.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917100225231.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917100310510.png">
+<meta property="og:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917100925551.png">
+<meta property="article:published_time" content="2023-02-19T14:02:31.000Z">
+<meta property="article:modified_time" content="2023-09-17T06:57:36.607Z">
 <meta property="article:author" content="Henry">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="侯捷">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230219212258600.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2023/02/19/STL%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>咱老李</title>
+  <title>STL与泛型编程 | 咱老李</title>
   
 
 
@@ -140,91 +353,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/11/TVM%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Henry">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/06/11/TVM%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">TVM调试配置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-06-11 07:24:31 / 修改时间：07:46:37" itemprop="dateCreated datePublished" datetime="2023-06-11T07:24:31+08:00">2023-06-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/TVM%E5%85%A5%E9%97%A8/" itemprop="url" rel="index"><span itemprop="name">TVM入门</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="clone-源码"><a href="#clone-源码" class="headerlink" title="clone 源码"></a>clone 源码</h1><p>git clone -b v0.8 <a target="_blank" rel="noopener" href="https://github.com/apache/tvm.git">https://github.com/apache/tvm.git</a></p>
-<p>注意 <a target="_blank" rel="noopener" href="https://github.com/apache/tvm/tree/v0.8/3rdparty">3rdparty</a> 里边的  </p>
-<p><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/tree/a3bcc6981d5dad3afb212689e2c7853d1b1ee45d">cutlass @ a3bcc69</a>  </p>
-<p><a target="_blank" rel="noopener" href="https://github.com/dmlc/dlpack/tree/ddeb264880a1fa7e7be238ab3901a810324fbe5f">dlpack @ ddeb264</a>  </p>
-<p><a target="_blank" rel="noopener" href="https://github.com/dmlc/dmlc-core/tree/21cc7de0dc9fd6acb796e1be6181fa8e6b6c8f41">dmlc-core @ 21cc7de </a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/tlc-pack/libbacktrace/tree/08f7c7e69f8ea61a0c4151359bc8023be8e9217b">libbacktrace @ 08f7c7e </a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/agauniyal/rang/tree/cabe04d6d6b05356fa8f9741704924788f0dd762">rang @ cabe04d</a></p>
-<p> <a target="_blank" rel="noopener" href="https://github.com/apache/incubator-tvm-vta/tree/36a91576edf633479c78649e050f18dd2ddc8103">vta-hw @ 36a9157</a>  要单独下载下来 git clone 下载不了</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/06/11/TVM%E9%85%8D%E7%BD%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -240,10 +372,9 @@
       <meta itemprop="name" content="咱老李">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/02/19/STL%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">STL与泛型编程</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          STL与泛型编程
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -282,7 +413,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="C-Standard-Library-vs-Standard-Template-Library"><a href="#C-Standard-Library-vs-Standard-Template-Library" class="headerlink" title="C++ Standard Library vs. Standard Template Library"></a>C++ Standard Library vs. Standard Template Library</h1><p>C++ 标准库，编译器提供了 标准库所有的头文件，</p>
+        <h1 id="C-Standard-Library-vs-Standard-Template-Library"><a href="#C-Standard-Library-vs-Standard-Template-Library" class="headerlink" title="C++ Standard Library vs. Standard Template Library"></a>C++ Standard Library vs. Standard Template Library</h1><p>C++ 标准库，编译器提供了 标准库所有的头文件，</p>
 <p>STL  标准模板库，包含 6 大组件</p>
 <p>C++ 标准库 &gt;  STL 标准模板库</p>
 <p><img src="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230219212258600.png" alt="image-20230219212258600"></p>
@@ -729,662 +860,39 @@
 <p>std::string 有moveable 的实现</p>
 <p><img src="https://github.com/imlihang/BlogImage/raw/master/2022/hou_cpp/image-20230917100925551.png" alt="image-20230917100925551"></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C</a>
+              <a href="/tags/%E4%BE%AF%E6%8D%B7/" rel="tag"># 侯捷</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/14/C++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Henry">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/14/C++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">C++程序设计</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-12-14 22:02:31" itemprop="dateCreated datePublished" datetime="2022-12-14T22:02:31+08:00">2022-12-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-12 16:39:13" itemprop="dateModified" datetime="2023-03-12T16:39:13+08:00">2023-03-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">C++程序设计</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><h3 id="conversion-function"><a href="#conversion-function" class="headerlink" title="conversion function"></a>conversion function</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Fraction</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Fraction</span>(<span class="type">int</span> num, <span class="type">int</span> den = <span class="number">1</span>) :</span><br><span class="line">		<span class="built_in">m_numerator</span>(num), <span class="built_in">m_denominator</span>(den)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">operator</span> <span class="title">double</span><span class="params">()</span> <span class="type">const</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (<span class="type">double</span>)(m_numerator / m_denominator);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> m_numerator; <span class="comment">//分子</span></span><br><span class="line">	<span class="type">int</span> m_denominator; <span class="comment">//分母</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="function">Fraction <span class="title">f</span><span class="params">(<span class="number">3</span>, <span class="number">5</span>)</span></span>;</span><br><span class="line">	<span class="type">double</span> d = f + <span class="number">4</span>; <span class="comment">//调用operator double()经将f转为0.6</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/14/C++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Henry">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">C++面向对象</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-12-04 08:43:31" itemprop="dateCreated datePublished" datetime="2022-12-04T08:43:31+08:00">2022-12-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-18 18:22:48" itemprop="dateModified" datetime="2022-12-18T18:22:48+08:00">2022-12-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" itemprop="url" rel="index"><span itemprop="name">C++面向对象</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>看了侯捷的 C++ 面向对象，做点笔记</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/04/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/14/C++%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" rel="prev" title="C++程序设计">
+      <i class="fa fa-chevron-left"></i> C++程序设计
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/06/11/TVM%E9%85%8D%E7%BD%AE/" rel="next" title="TVM调试配置">
+      TVM调试配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/27/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Henry">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/27/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">hexo搭建个人博客</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-27 09:19:31" itemprop="dateCreated datePublished" datetime="2022-02-27T09:19:31+08:00">2022-02-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-12 16:37:19" itemprop="dateModified" datetime="2023-03-12T16:37:19+08:00">2023-03-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p><a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
-<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><p>npm install  -g  hexo-cli</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/02/27/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/23/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Henry">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/23/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">逻辑回归梯度下降的简单实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-23 16:57:31" itemprop="dateCreated datePublished" datetime="2019-11-23T16:57:31+08:00">2019-11-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-01 15:29:44" itemprop="dateModified" datetime="2019-12-01T15:29:44+08:00">2019-12-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/" itemprop="url" rel="index"><span itemprop="name">机器学习算法实现</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>用Java简单实现逻辑回归梯度下降</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/23/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/23/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Henry">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/23/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">线性回归梯度下降的简单实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-23 16:45:31" itemprop="dateCreated datePublished" datetime="2019-11-23T16:45:31+08:00">2019-11-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-30 22:50:57" itemprop="dateModified" datetime="2019-11-30T22:50:57+08:00">2019-11-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/" itemprop="url" rel="index"><span itemprop="name">机器学习算法实现</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>用Java简单实现梯度下降</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/23/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/23/CSharp%E8%B0%83%E7%94%A8%E6%B5%B7%E5%BA%B7%E7%9B%B8%E6%9C%BA%E9%87%87%E9%9B%86%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E4%B8%BAHObject%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Henry">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/23/CSharp%E8%B0%83%E7%94%A8%E6%B5%B7%E5%BA%B7%E7%9B%B8%E6%9C%BA%E9%87%87%E9%9B%86%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E4%B8%BAHObject%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">利用CSharp调用海康相机采集图片并转换HObject类型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2019-11-23 16:34:31 / 修改时间：17:35:20" itemprop="dateCreated datePublished" datetime="2019-11-23T16:34:31+08:00">2019-11-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B5%B7%E5%BA%B7%E7%9B%B8%E6%9C%BA%E7%9A%84CSharp%E8%B0%83%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">海康相机的CSharp调用</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前使用Halcon采集图片调用海康相机出现了一些问题，所以不得不用相机SDK来进行图片采集。</p>
-<p>后来发现通过SDK调用相机很方便，可以调节曝光时间，调用多个相机也比较方便。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/23/CSharp%E8%B0%83%E7%94%A8%E6%B5%B7%E5%BA%B7%E7%9B%B8%E6%9C%BA%E9%87%87%E9%9B%86%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E4%B8%BAHObject%E7%B1%BB%E5%9E%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/23/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BD%BF%E7%94%A8TensorflowJS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Henry">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/23/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BD%BF%E7%94%A8TensorflowJS/" class="post-title-link" itemprop="url">浏览器使用TensorflowJS</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-23 16:31:31" itemprop="dateCreated datePublished" datetime="2019-11-23T16:31:31+08:00">2019-11-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-01 15:28:43" itemprop="dateModified" datetime="2019-12-01T15:28:43+08:00">2019-12-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%A8%A1%E5%9E%8B%E8%B0%83%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">模型调用</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="http://imlihang.cn/sketcher">“你画我猜”</a></p>
-<p>看到这么一个东西小小研究了一波。</p>
-<p>浏览器真是一个好的展示平台。</p>
-<p>Google Colab 免费强大的深度学习利器。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/23/TensorflowSharp%E4%BD%BF%E7%94%A8%E5%9B%BE%E7%89%87%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B%E5%81%9A%E9%A2%84%E6%B5%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Henry">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="咱老李">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/23/TensorflowSharp%E4%BD%BF%E7%94%A8%E5%9B%BE%E7%89%87%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B%E5%81%9A%E9%A2%84%E6%B5%8B/" class="post-title-link" itemprop="url">TensorflowSharp使用图片分类模型做预测</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2019-11-23 16:26:31 / 修改时间：17:24:58" itemprop="dateCreated datePublished" datetime="2019-11-23T16:26:31+08:00">2019-11-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%A8%A1%E5%9E%8B%E8%B0%83%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">模型调用</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>如何在C#中加载图片使用 Tensorflow 训练好的模型做图片分类呢？</p>
-<p>小弟不才，只在 Github 中，找到了这么一个相关的开源程序。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/hwvs/Dog-or-Cat-TensorflowSharp-Example">Dog-or-Cat-TensorflowSharp-Example</a></p>
-<p>现在我们来 look 一下，这个程序中是如何加载图片做预测的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/23/TensorflowSharp%E4%BD%BF%E7%94%A8%E5%9B%BE%E7%89%87%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B%E5%81%9A%E9%A2%84%E6%B5%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -1436,6 +944,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-Standard-Library-vs-Standard-Template-Library"><span class="nav-number">1.</span> <span class="nav-text">C++ Standard Library vs. Standard Template Library</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STL-%E5%85%AD%E5%A4%A7%E9%83%A8%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">STL 六大部件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6-Complexity-Big-oh"><span class="nav-number">3.</span> <span class="nav-text">复杂度 Complexity, Big-oh</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E9%97%AD%E5%90%8E%E5%BC%80-%E5%8C%BA%E9%97%B4"><span class="nav-number">4.</span> <span class="nav-text">前闭后开 区间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-%E2%80%94-%E7%BB%93%E6%9E%84%E4%B8%8E%E5%88%86%E7%B1%BB"><span class="nav-number">5.</span> <span class="nav-text">容器 — 结构与分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-%E4%B8%8E-Map-%E5%8C%BA%E5%88%AB"><span class="nav-number">5.1.</span> <span class="nav-text">Set 与 Map 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8-array"><span class="nav-number">5.2.</span> <span class="nav-text">使用容器 array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8vector"><span class="nav-number">5.3.</span> <span class="nav-text">使用vector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-list"><span class="nav-number">5.4.</span> <span class="nav-text">使用 list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-forward-list"><span class="nav-number">5.5.</span> <span class="nav-text">使用 forward_list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-slist"><span class="nav-number">5.6.</span> <span class="nav-text">使用 slist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-deque"><span class="nav-number">5.7.</span> <span class="nav-text">使用 deque</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-stack"><span class="nav-number">5.8.</span> <span class="nav-text">使用 stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8queue"><span class="nav-number">5.9.</span> <span class="nav-text">使用queue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8multiset"><span class="nav-number">5.10.</span> <span class="nav-text">使用multiset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8-multimap"><span class="nav-number">5.11.</span> <span class="nav-text">使用容器 multimap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8-unordered-multiset"><span class="nav-number">5.12.</span> <span class="nav-text">使用容器 unordered_multiset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8-unordered-multiset-1"><span class="nav-number">5.13.</span> <span class="nav-text">使用容器 unordered_multiset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8-set"><span class="nav-number">5.14.</span> <span class="nav-text">使用容器 set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8-map"><span class="nav-number">5.15.</span> <span class="nav-text">使用容器 map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">5.15.0.1.</span> <span class="nav-text"></span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8-unordered-set"><span class="nav-number">5.16.</span> <span class="nav-text">使用容器 unordered_set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8-unordered-map"><span class="nav-number">5.17.</span> <span class="nav-text">使用容器 unordered_map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%88%86%E9%85%8D%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">使用分配器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BA%93%E7%89%88%E6%9C%AC"><span class="nav-number">7.</span> <span class="nav-text">标准库版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OOP-vs-GP"><span class="nav-number">8.</span> <span class="nav-text">OOP vs. GP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD-Operator-Overloading"><span class="nav-number">9.</span> <span class="nav-text">操作符重载 Operator Overloading</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF"><span class="nav-number">10.</span> <span class="nav-text">模板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Templates-%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">10.1.</span> <span class="nav-text">Class Templates 类模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Templates-%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">10.2.</span> <span class="nav-text">Function Templates 函数模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Member-Templates-%E6%88%90%E5%91%98%E6%A8%A1%E6%9D%BF"><span class="nav-number">10.3.</span> <span class="nav-text">Member Templates,成员模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Specialization-%E7%89%B9%E5%8C%96"><span class="nav-number">10.4.</span> <span class="nav-text">Specialization 特化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Partial-Specialization-%E5%81%8F%E7%89%B9%E5%8C%96"><span class="nav-number">10.5.</span> <span class="nav-text">Partial Specialization 偏特化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E5%99%A8-allocators"><span class="nav-number">11.</span> <span class="nav-text">分配器 allocators</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%BB%93%E6%9E%84%E4%B8%8E%E5%88%86%E7%B1%BB"><span class="nav-number">12.</span> <span class="nav-text">容器结构与分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E6%8E%A2%E7%B4%A2list"><span class="nav-number">13.</span> <span class="nav-text">深度探索list</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99-iterator"><span class="nav-number">14.</span> <span class="nav-text">迭代器的设计原则 iterator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-vector"><span class="nav-number">15.</span> <span class="nav-text">容器 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vector-iterator"><span class="nav-number">15.1.</span> <span class="nav-text">vector iterator</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-array"><span class="nav-number">16.</span> <span class="nav-text">容器 array</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-forward-list"><span class="nav-number">17.</span> <span class="nav-text">容器 forward_list</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-deque"><span class="nav-number">18.</span> <span class="nav-text">容器 deque</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#insert"><span class="nav-number">18.1.</span> <span class="nav-text">insert()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deque%E6%A8%A1%E6%8B%9F%E8%BF%9E%E7%BB%AD%E7%A9%BA%E9%97%B4"><span class="nav-number">18.2.</span> <span class="nav-text">deque模拟连续空间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-rb-tree"><span class="nav-number">19.</span> <span class="nav-text">容器 rb_tree</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-set-multiset"><span class="nav-number">20.</span> <span class="nav-text">容器 set,multiset</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-map-multimap"><span class="nav-number">21.</span> <span class="nav-text">容器 map,multimap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-hashtable"><span class="nav-number">22.</span> <span class="nav-text">容器 hashtable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-number">23.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">23.1.</span> <span class="nav-text">算法是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">23.2.</span> <span class="nav-text">迭代器的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%86%E7%B1%BB%E5%AF%B9%E7%AE%97%E6%B3%95%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">23.2.1.</span> <span class="nav-text">迭代器分类对算法的影响</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#distance"><span class="nav-number">23.2.1.1.</span> <span class="nav-text">distance()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#advance"><span class="nav-number">23.2.1.2.</span> <span class="nav-text">advance()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#copy"><span class="nav-number">23.2.1.3.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#destory"><span class="nav-number">23.2.1.4.</span> <span class="nav-text">destory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unique-copy"><span class="nav-number">23.2.1.5.</span> <span class="nav-text">unique_copy</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">23.2.2.</span> <span class="nav-text">算法示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-accumulate"><span class="nav-number">23.2.2.1.</span> <span class="nav-text">算法 accumulate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-for-each"><span class="nav-number">23.2.2.2.</span> <span class="nav-text">算法 for_each</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-replace-replace-if-replace-copy"><span class="nav-number">23.2.2.3.</span> <span class="nav-text">算法 replace, replace_if, replace_copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-count-count-if"><span class="nav-number">23.2.2.4.</span> <span class="nav-text">算法 count, count_if</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-find-find-if"><span class="nav-number">23.2.2.5.</span> <span class="nav-text">算法 find, find_if</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-sort"><span class="nav-number">23.2.2.6.</span> <span class="nav-text">算法 sort</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-reverse-iterator-rbeign-rend"><span class="nav-number">23.2.2.7.</span> <span class="nav-text">关于 reverse iterator, rbeign(),rend()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#binary-search"><span class="nav-number">23.2.2.8.</span> <span class="nav-text">binary search</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BF%E5%87%BD%E6%95%B0-functors"><span class="nav-number">23.2.3.</span> <span class="nav-text">仿函数 functors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E9%85%8D%E5%99%A8-Adapters"><span class="nav-number">23.2.4.</span> <span class="nav-text">适配器 Adapters</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8%EF%BC%9Astack-queue"><span class="nav-number">23.2.4.1.</span> <span class="nav-text">容器适配器：stack queue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%80%82%E9%85%8D%E5%99%A8-binder2nd"><span class="nav-number">23.2.4.2.</span> <span class="nav-text">函数适配器 binder2nd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%9E%8B%E9%80%82%E9%85%8D%E5%99%A8-bind"><span class="nav-number">23.2.4.3.</span> <span class="nav-text">新型适配器 bind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%80%82%E9%85%8D%E5%99%A8-not1"><span class="nav-number">23.2.4.4.</span> <span class="nav-text">函数适配器 not1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8"><span class="nav-number">23.2.4.5.</span> <span class="nav-text">迭代器适配器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8-inserter"><span class="nav-number">23.2.4.6.</span> <span class="nav-text">迭代器适配器 inserter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#X-%E9%80%82%E9%85%8D%E5%99%A8-ostream-iterator-%E6%9C%AA%E7%9F%A5%E9%80%82%E9%85%8D%E5%99%A8"><span class="nav-number">23.2.4.7.</span> <span class="nav-text">X 适配器: ostream_iterator  未知适配器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#X-%E9%80%82%E9%85%8D%E5%99%A8-istream-iterator"><span class="nav-number">23.2.4.8.</span> <span class="nav-text">X 适配器: istream_iterator</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%87%E7%94%A8-hash-function"><span class="nav-number">23.3.</span> <span class="nav-text">万用 hash function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tuple"><span class="nav-number">23.4.</span> <span class="nav-text">tuple</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type-traits"><span class="nav-number">23.5.</span> <span class="nav-text">type traits</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#type-traits-%E5%AE%9E%E7%8E%B0"><span class="nav-number">23.5.1.</span> <span class="nav-text">type traits 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-is-void"><span class="nav-number">23.5.1.1.</span> <span class="nav-text">实现 is_void</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-is-integral"><span class="nav-number">23.5.1.2.</span> <span class="nav-text">实现 is_integral</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cout"><span class="nav-number">23.5.2.</span> <span class="nav-text">cout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#movable-%E5%85%83%E7%B4%A0%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">23.6.</span> <span class="nav-text">movable 元素对性能的影响</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#movable-%E5%AF%B9%E5%90%84%E7%A7%8D%E5%AE%B9%E5%99%A8%E7%9A%84%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-number">23.6.1.</span> <span class="nav-text">movable 对各种容器的性能测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E4%B8%80%E4%B8%AA-movable-class"><span class="nav-number">23.6.2.</span> <span class="nav-text">写一个 movable class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%87%BD%E6%95%B0"><span class="nav-number">23.6.3.</span> <span class="nav-text">测试函数</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
